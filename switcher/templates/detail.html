@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if node %}
+<h1> {{node.app_name}}</h1>
+<p>package name: {{ node.pkg_name }}</p>
+<p>version : {{ node.version }}</p>
+<p>facebook id: {{ node.fid}}</p>
+{% else %}
+<p></p>
+{% endif %}
+
+{% endblock %}

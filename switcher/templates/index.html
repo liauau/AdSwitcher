@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div>
+    <table class="table table-hover ">
+        <thead class="thread-inverse">
+        <tr>
+            <th>#</th>
+            <th>App</th>
+            <th>Package</th>
+            <th>Version</th>
+            <th>ID</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% if node_set %}
+        {% for node in node_set %}
+        <tr>
+            <th scope="row">{{node.id}}</th>
+            <td>{{node.app_name}}</td>
+            <td>{{node.pkg_name}}</td>
+            <td>{{node.version}}</td>
+            <td>{{node.fid}}</td>
+            </th>
+        </tr>
+        {% endfor %}
+        {% else %}
+        {% endif %}
+        </tbody>
+
+    </table>
+</div>
+
+{% endblock %}
+
+
+<!--<ul class="list-group">-->
+<!--{% for node in node_set %}-->
+<!--<li class="list-group-item justify-content-between">-->
+<!--<a href="{% url 'switcher:detail' node.id %}">{{node.app_name}}</a>-->
+<!--&lt;!&ndash;<div align="right">&ndash;&gt;-->
+<!--&lt;!&ndash;<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--</li>-->
+<!--{% endfor %}-->
+<!--</ul>-->
