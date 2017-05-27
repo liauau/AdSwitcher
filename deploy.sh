@@ -2,7 +2,6 @@
 
 echo -e "[1] start deploy ..."
 echo -e "[2] modify ssh config"
-cp ~/.ssh/config ~/.ssh/config.bak
 cp ~/.ssh/config_vultr ~/.ssh/config
 echo -e "ssh config:"
 cat ~/.ssh/config
@@ -16,7 +15,7 @@ echo -e "\n[5] remove remote git reop."
 git remote remove production
 git remote -v
 echo -e "\n[6] restore ssh config"
-cp ~/.ssh/config.bak ~/.ssh/config
+cp ~/.ssh/config_default ~/.ssh/config
 echo "ssh config:"
 cat ~/.ssh/config
 echo -e "\n[7] deploy completed."
