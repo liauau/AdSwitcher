@@ -16,6 +16,7 @@ class Placement(models.Model):
     name = models.CharField(max_length=255)
     sid = models.IntegerField()
     extra = models.TextField()
+    shadow = models.BooleanField()
     app = models.ForeignKey('AppNode', related_name='placements', on_delete=models.CASCADE)
 
     def __str__(self):

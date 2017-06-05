@@ -5,7 +5,7 @@ from .models import AppNode, Context, Placement, MetaData
 class PlacementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Placement
-        fields = ('id', 'name', 'platform', 'sid', 'extra')
+        fields = ('id', 'name', 'platform', 'sid', 'extra', 'shadow')
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
 
 
@@ -76,6 +76,7 @@ class AppNodeSerializer(serializers.ModelSerializer):
                     old_pm_obj.platform = pm.get('platform', old_pm_obj.platform)
                     old_pm_obj.sid = pm.get('sid', old_pm_obj.sid)
                     old_pm_obj.extra = pm.get('extra', old_pm_obj.extra)
+                    old_pm_obj.shadow = pm.get('shadow', old_pm_obj.shadow)
                     old_pm_obj.save()
                 else:
                     Placement.objects.create(app=app_node, **pm)
