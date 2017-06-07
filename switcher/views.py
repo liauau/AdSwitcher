@@ -19,7 +19,7 @@ class DetailView(generic.DetailView):
     context_object_name = 'node'
 
 
-class ApiListView(generics.ListCreateAPIView):
+class ApiGetAdConfigListView(generics.ListCreateAPIView):
     queryset = AppNode.objects.all()
     serializer_class = AppNodeSerializer
     permission_classes = {permissions.IsAuthenticatedOrReadOnly, }
@@ -27,8 +27,15 @@ class ApiListView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
+    def filter_queryset(self, queryset):
+        query_params = self.request.query_params
+        pkg_name = query_params.get('_appPkgName')
+        if pkg_name:
+            queryset = queryset.filter(pkg_name=pkg_name)
+        return super().filter_queryset(queryset)
 
-class ApiDetailView(generics.RetrieveUpdateDestroyAPIView):
+
+class ApiGetAdConfigDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = AppNode.objects.all()
     serializer_class = AppNodeSerializer
     permission_classes = {permissions.IsAuthenticatedOrReadOnly, }
