@@ -1,5 +1,8 @@
 #!/bin/bash
-if [ $# -ne 1 ] || [ $1 != 'debug' ] && [ $1 != 'production' ]; then
+DEBUG='debug'
+PROD='production'
+
+if [ $# -ne 1 ] || [ $1 != $DEBUG ] && [ $1 != $PROD ]; then
     echo 'usage: ./deploy.sh [debug|production]'
     exit
 fi
@@ -10,15 +13,20 @@ echo -e "[1] start deploy ..."
 echo "origin ssh config:"
 cat ~/.ssh/config
 echo -e "[2] modify ssh config"
-cp ~/.ssh/config_vultr ~/.ssh/config
+if [ $env = $PROD ]; then
+    cp ~/.ssh/config_prod ~/.ssh/config
+else
+    cp ~/.ssh/config_debug ~/.ssh/config
+fi
+
 echo -e "new ssh config:"
 cat ~/.ssh/config
 
 echo -e "\n[3] start git push ..."
-remote_repo='ssh://root@vultr:/opt/AdSwitcher'
-
-if [ $1 = 'debug' ]; then
-    remote_repo='ssh://root@vultr:/opt/Debug_AdSwitcher'
+if [ $env = $PROD ]; then
+    remote_repo='ssh://ec2-user@remote:/opt/AdSwitcher'
+else
+    remote_repo='ssh://root@remote:/opt/AdSwitcher'
 fi
 echo 'push to '$remote_repo
 git push $remote_repo master
