@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import AppNode, Context, Placement, MetaData
+from .models.config import AppNode, Context, Placement, MetaData
 
 
 class PlacementSerializer(serializers.ModelSerializer):

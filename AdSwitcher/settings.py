@@ -25,7 +25,7 @@ SECRET_KEY = '65_fq9tz6bz)7i4=+x1o0#=(f+1y_#uce+lmbly_68kvz#xgr8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['45.32.83.198', '127.0.0.1', '192.168.1.141', 'update.miusay.com']
+ALLOWED_HOSTS = ['45.32.83.198', '127.0.0.1', '192.168.1.141', 'update.miusay.com', 'miusay.com']
 
 
 # Application definition
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'switcher',
+    'statistic',
 ]
 
 MIDDLEWARE = [
@@ -77,11 +78,14 @@ WSGI_APPLICATION = 'AdSwitcher.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'adswitcher',
+        'USER': 'switcher',
+        'PASSWORD': 'switcher',
+        'HOST': 'localhost',
+        'PORT': 5432,
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators

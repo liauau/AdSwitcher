@@ -1,7 +1,7 @@
 from django.views import generic
 from rest_framework import generics
 from rest_framework import permissions
-from .models import AppNode
+from .models.config import AppNode
 from .serializer import AppNodeSerializer
 
 
@@ -35,4 +35,3 @@ class ApiDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
-

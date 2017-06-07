@@ -14,9 +14,9 @@ class AppNode(models.Model):
 class Placement(models.Model):
     platform = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
-    sid = models.IntegerField()
-    extra = models.TextField()
-    shadow = models.BooleanField()
+    sid = models.IntegerField(default=0)
+    extra = models.TextField(default='')
+    shadow = models.BooleanField(default=False)
     app = models.ForeignKey('AppNode', related_name='placements', on_delete=models.CASCADE)
 
     def __str__(self):
@@ -27,7 +27,7 @@ class Context(models.Model):
     platform = models.CharField(max_length=255)
     pkg_name = models.CharField(max_length=255)
     version_name = models.CharField(max_length=255)
-    version_code = models.IntegerField()
+    version_code = models.IntegerField(default=0)
     label = models.CharField(max_length=255)
     signatures = models.TextField()
     app = models.ForeignKey('AppNode', related_name='context', on_delete=models.CASCADE)
@@ -42,4 +42,4 @@ class MetaData(models.Model):
     context = models.ForeignKey('Context', related_name='meta_data', on_delete=models.CASCADE)
 
     def __str__(self):
-        return 'name: %s' % self.name + ', value: ' % self.value
+        return 'name: %s' % self.name + ', value: %s' % self.value
