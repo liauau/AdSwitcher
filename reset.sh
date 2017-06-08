@@ -5,3 +5,4 @@ python manage.py migrate
 python manage.py createsuperuser  --username testAuth --email liauau2009@qq.com
 
 
+
