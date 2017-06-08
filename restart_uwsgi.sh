@@ -1,6 +1,5 @@
 #!/bin/bash
-cd /opt/AdSwitcher
-source ./venv/AdSwitcher/bin/active
+source /opt/AdSwitcher/venv/AdSwitcher/bin/activate
 killall uwsgi
 sleep 3s
-nohup uwsgi uwsgi.ini > uwsgi.log 2>&1 &
+nohup uwsgi /opt/AdSwitcher/uwsgi.ini > /opt/AdSwitcher/uwsgi.log 2>&1 &
