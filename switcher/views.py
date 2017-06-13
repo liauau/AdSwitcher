@@ -3,6 +3,7 @@ from rest_framework import generics
 from rest_framework import permissions
 from .models.config import AppNode
 from .serializer import AppNodeSerializer
+from django.shortcuts import get_object_or_404
 
 
 # Create your views here.
@@ -42,3 +43,16 @@ class ApiGetAdConfigDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+    def get_object(self):
+        query_params = self.request.query_params
+        pkg_name = query_params.get('_appPkgName')
+        filter_kwargs = {self.lookup_field: pkg_name}
+
+        queryset = self.filter_queryset(self.get_queryset())
+        obj = get_object_or_404(queryset, **filter_kwargs)
+
+        # May raise a permission denied
+        self.check_object_permissions(self.request, obj)
+
+        return obj
