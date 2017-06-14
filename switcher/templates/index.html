@@ -2,6 +2,12 @@
 {% block content %}
 
 <div>
+    <form action="v1/ad_config/" method="post">
+        <label for="pkg_name">Package Name: </label>
+        <input id="pkg_name" type="text" name="pkg_name" value="pkg name">
+        <input type="submit" value="OK">
+    </form>
+
     <table class="table table-hover ">
         <thead class="thread-inverse">
         <tr>
