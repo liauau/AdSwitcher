@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.views import generic
 from switcher.models.ad_config import AppNode
-from switcher.forms import PkgNameForm
+from switcher.forms import RoleForm
 from django.http import HttpResponseRedirect
+from switcher.models.user import User
 
 
 class IndexView(generic.ListView):
@@ -19,10 +20,52 @@ class DetailView(generic.DetailView):
 
 def get_pkg(request):
     if request.method == 'POST':
-        form = PkgNameForm(request.POST)
-        if form.is_valid():
-            return HttpResponseRedirect('/thanks/')
+        param_dict = request.POST
+        current_pkg_name = request.POST['input_pkg_name']
     else:
-        form = PkgNameForm()
+        param_dict = {}
 
-    return render(request, 'name.html', {'form': form})
+    # return render(request, 'name.html', {'form': form, 'param_dict': param_dict})
+    return render(request, 'name.html', {
+        'param_dict': param_dict,
+        'current_pkg_name': current_pkg_name
+    })
+
+
+def login(request):
+    if request.method == 'POST':
+        form = RoleForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            name = data.get('name')
+            password = data.get('password')
+            member = User.objects.get(name=name)
+
+            if member and member.password == password:
+                return render(request, 'welcome.html', {
+                    'user': data.get('name')
+                })
+    else:
+        form = RoleForm()
+
+    return render(request, 'login.html', {
+        'form': form
+    })
+
+
+def register(request):
+    if request.method == 'POST':
+        form = RoleForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            name = data.get('name')
+            password = data.get('password')
+            member = User(name=name, password=password)
+            member.save()
+            return render(request, 'login.html', {'form': form})
+    else:
+        form = RoleForm()
+
+    return render(request, 'register.html', {
+        'form': form
+    })

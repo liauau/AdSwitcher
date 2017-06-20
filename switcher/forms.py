@@ -1,5 +1,6 @@
 from django import forms
 
 
-class PkgNameForm(forms.Form):
-    pkg_name = forms.CharField(label='pkg_name', max_length=10)
+class RoleForm(forms.Form):
+    name = forms.CharField(label='name', max_length=10)
+    password = forms.CharField(label='password', widget=forms.PasswordInput)

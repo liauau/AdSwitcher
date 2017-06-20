@@ -7,8 +7,17 @@
 <body>
 <form action="/pkg_name/" method="post">
     {% csrf_token %}
-    {{ form }}
-    <input type="sumbit" value="Sumbit" />
+    <label for="pkg_name">Pkg Name: </label>
+    <input id="pkg_name" type="text" name="input_pkg_name" value="{{ current_pkg_name }}">
+    <input type="submit" value="OK" />
 </form>
+
+{% block content %}
+{% if param_dict %}
+{% for item in param_dict %}
+    <p>{{ param_dict }}</p>
+{% endfor %}
+{% endif %}
+{% endblock %}
 </body>
 </html>
