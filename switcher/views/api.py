@@ -5,6 +5,7 @@ from switcher.serializer.ad_config import AppNodeSerializer
 from switcher.models.app_family import Member
 from switcher.serializer.app_family import MemberSerializer
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
 from switcher.models.ad_crack import CrackNode
 from switcher.serializer.ad_crack import CrackNodeSerializer
 
@@ -61,7 +62,10 @@ class AppFamilyListView(generics.ListCreateAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
     def filter_queryset(self, queryset):
-        queryset = get_queryset(self, queryset)
+        query_params = self.request.query_params
+        pkg_name = query_params.get('_appPkgName')
+        if pkg_name:
+            queryset = queryset.filter(Q(public=True) | Q(pkg_name=pkg_name))
         return super().filter_queryset(queryset)
 
 
@@ -83,7 +87,7 @@ class AdContextListView(generics.ListCreateAPIView):
 class AdContextDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = CrackNode.objects.all()
     serializer_class = CrackNodeSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
     def get_object(self):
         self.lookup_field = 'pk'

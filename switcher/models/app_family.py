@@ -9,6 +9,7 @@ class Member(models.Model):
     desc = models.CharField(max_length=255)
     install_action = models.CharField(max_length=255)
     open_action = models.CharField(max_length=255)
+    public = models.BooleanField(default=True)
 
     def __str__(self):
         return "pkg_name: %s" % self.pkg_name + ", app_name: %s" % self.app_name \
