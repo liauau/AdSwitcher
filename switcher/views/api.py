@@ -5,6 +5,29 @@ from switcher.serializer.ad_config import AppNodeSerializer
 from switcher.models.app_family import Member
 from switcher.serializer.app_family import MemberSerializer
 from django.shortcuts import get_object_or_404
+from switcher.models.ad_crack import CrackNode
+from switcher.serializer.ad_crack import CrackNodeSerializer
+
+
+def get_queryset(self, queryset):
+    query_params = self.request.query_params
+    pkg_name = query_params.get('_appPkgName')
+    if pkg_name:
+        queryset = queryset.filter(pkg_name=pkg_name)
+    return queryset
+
+
+def get_object(self):
+    query_params = self.request.query_params
+    pkg_name = query_params.get('_appPkgName')
+    filter_kwargs = {self.lookup_field: pkg_name}
+
+    queryset = self.filter_queryset(self.get_queryset())
+    obj = get_object_or_404(queryset, **filter_kwargs)
+
+    # May raise a permission denied
+    self.check_object_permissions(self.request, obj)
+    return obj
 
 
 class AdConfigListView(generics.ListCreateAPIView):
@@ -16,10 +39,7 @@ class AdConfigListView(generics.ListCreateAPIView):
         serializer.save(owner=self.request.user)
 
     def filter_queryset(self, queryset):
-        query_params = self.request.query_params
-        pkg_name = query_params.get('_appPkgName')
-        if pkg_name:
-            queryset = queryset.filter(pkg_name=pkg_name)
+        queryset = get_queryset(self, queryset)
         return super().filter_queryset(queryset)
 
 
@@ -32,17 +52,7 @@ class AdConfigDetailView(generics.RetrieveUpdateDestroyAPIView):
         serializer.save(owner=self.request.user)
 
     def get_object(self):
-        query_params = self.request.query_params
-        pkg_name = query_params.get('_appPkgName')
-        filter_kwargs = {self.lookup_field: pkg_name}
-
-        queryset = self.filter_queryset(self.get_queryset())
-        obj = get_object_or_404(queryset, **filter_kwargs)
-
-        # May raise a permission denied
-        self.check_object_permissions(self.request, obj)
-
-        return obj
+        return get_object(self)
 
 
 class AppFamilyListView(generics.ListCreateAPIView):
@@ -51,9 +61,7 @@ class AppFamilyListView(generics.ListCreateAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
     def filter_queryset(self, queryset):
-        pkg_name = self.request.query_params.get('_appPkgName')
-        if pkg_name:
-            queryset = queryset.exclude(pkg_name=pkg_name)
+        queryset = get_queryset(self, queryset)
         return super().filter_queryset(queryset)
 
 
@@ -63,14 +71,20 @@ class AppFamilyDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
     def get_object(self):
-        query_params = self.request.query_params
-        pkg_name = query_params.get('_appPkgName')
-        filter_kwargs = {self.lookup_field: pkg_name}
+        return get_object(self)
 
-        queryset = self.filter_queryset(self.get_queryset())
-        obj = get_object_or_404(queryset, **filter_kwargs)
 
-        # May raise a permission denied
-        self.check_object_permissions(self.request, obj)
+class AdContextListView(generics.ListCreateAPIView):
+    queryset = CrackNode.objects.all()
+    serializer_class = CrackNodeSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
-        return obj
+
+class AdContextDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = CrackNode.objects.all()
+    serializer_class = CrackNodeSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
+
+    def get_object(self):
+        self.lookup_field = 'pk'
+        return get_object(self)
