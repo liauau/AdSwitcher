@@ -12,8 +12,8 @@ class CrackPlacementSerializer(serializers.ModelSerializer):
 class CrackContextSerializer(serializers.ModelSerializer):
     class Meta:
         model = CrackContext
-        fields = ('platform', 'pkg_name', 'version_name', 'version_code',
-                  'label', 'signatures', 'extra')
+        fields = ('pkg_name', 'version_name', 'version_code',
+                  'label', 'signatures')
 
 
 class CrackNodeSerializer(serializers.ModelSerializer):
@@ -56,11 +56,9 @@ class CrackNodeSerializer(serializers.ModelSerializer):
 
     def update_context(self, crack_node, context_data):
         context_obj = CrackContext.objects.get(crack_node=crack_node)
-        context_obj.platform = context_data.get('platform', context_obj.platform)
         context_obj.pkg_name = context_data.get('pkg_name', context_obj.pkg_name)
         context_obj.version_name = context_data.get('version_name', context_obj.version_name)
         context_obj.version_code = context_data.get('version_code', context_obj.version_code)
         context_obj.label = context_data.get('label', context_obj.label)
         context_obj.signatures = context_data.get('signatures', context_obj.signatures)
-        context_obj.extra = context_data.get('extra', context_obj.extra)
         context_obj.save()

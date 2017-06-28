@@ -10,7 +10,7 @@ class CrackNode(models.Model):
 
 class CrackPlacement(models.Model):
     sid = models.IntegerField(default=0)
-    extra = models.TextField(default='')
+    extra = models.TextField(default='', blank=True, null=True)
     crack_node = models.ForeignKey('CrackNode', related_name='placements', on_delete=models.CASCADE)
 
     def __str__(self):
@@ -18,14 +18,12 @@ class CrackPlacement(models.Model):
 
 
 class CrackContext(models.Model):
-    platform = models.CharField(max_length=255)
     pkg_name = models.CharField(max_length=255)
     version_name = models.CharField(max_length=255)
     version_code = models.IntegerField(default=0)
     label = models.CharField(max_length=255)
     signatures = models.TextField()
-    extra = models.TextField(default='')
     crack_node = models.OneToOneField('CrackNode', related_name='context', on_delete=models.CASCADE)
 
     def __str__(self):
-        return 'pkg_name: %s' % self.pkg_name + ", extra: %s" % self.extra
+        return 'pkg_name: %s' % self.pkg_name
