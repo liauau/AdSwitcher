@@ -25,11 +25,13 @@ cat ~/.ssh/config
 echo -e "\n[3] start git push ..."
 if [ $env = $PROD ]; then
     remote_repo='ssh://ec2-user@remote:/opt/AdSwitcher'
+    local_branch='master'
 else
     remote_repo='ssh://root@remote:/opt/AdSwitcher'
+    local_branch='develop'
 fi
 echo 'push to '$remote_repo
-git push $remote_repo master
+git push $remote_repo $local_branch
 echo "[4] git push completed."
 
 echo -e "\n[5] restore ssh config"
