@@ -5,7 +5,7 @@ from rest_framework import serializers
 class CrackPlacementSerializer(serializers.ModelSerializer):
     class Meta:
         model = CrackPlacement
-        fields = ('id', 'sid', 'extra')
+        fields = ('id', 'sid', 'extra', 'start_times', 'max_times')
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
 
 

@@ -10,6 +10,8 @@ class CrackNode(models.Model):
 
 class CrackPlacement(models.Model):
     sid = models.IntegerField(default=0)
+    start_times = models.IntegerField(default=0)
+    max_times = models.IntegerField(default=0)
     extra = models.TextField(default='', blank=True, null=True)
     crack_node = models.ForeignKey('CrackNode', related_name='placements', on_delete=models.CASCADE)
 
