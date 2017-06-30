@@ -50,6 +50,8 @@ class CrackNodeSerializer(serializers.ModelSerializer):
                     old_pm_obj = CrackPlacement.objects.get(id=expected_pm_id, crack_node=crack_node)
                     old_pm_obj.sid = pm.get('sid', old_pm_obj.sid)
                     old_pm_obj.extra = pm.get('extra', old_pm_obj.extra)
+                    old_pm_obj.start_times = pm.get('start_times', old_pm_obj.start_times)
+                    old_pm_obj.max_times = pm.get('max_times', old_pm_obj.max_times)
                     old_pm_obj.save()
                 else:
                     CrackPlacement.objects.create(crack_node=crack_node, **pm)
