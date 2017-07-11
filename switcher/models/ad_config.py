@@ -15,7 +15,7 @@ class Placement(models.Model):
     platform = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
     sid = models.IntegerField(default=0)
-    extra = models.TextField(default='')
+    extra = models.TextField(default='', blank=True, null=True)
     shadow = models.BooleanField(default=False)
     app = models.ForeignKey('AppNode', related_name='placements', on_delete=models.CASCADE)
 
