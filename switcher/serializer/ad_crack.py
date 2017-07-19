@@ -1,7 +1,8 @@
+from rest_framework import serializers
+
 from switcher.models.ad_crack import CrackContext, CrackNode, CrackPlacement
 from ..models.ad_crack import PLACEMENT, CONTEXT, SID, EXTRA, START_TIMES, MAX_TIMES, PKG_NAME, VERSION_CODE, \
-    VERSION_NAME, LABEL, SIGNATURES
-from rest_framework import serializers
+    VERSION_NAME, LABEL, SIGNATURES, EXPIRES_INTERVAL_TIME, JH_ENABLE, FB_ENABLE
 
 
 class CrackPlacementSerializer(serializers.ModelSerializer):
@@ -23,25 +24,39 @@ class CrackNodeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CrackNode
-        fields = (PKG_NAME, PLACEMENT, CONTEXT)
+        fields = (PKG_NAME, EXPIRES_INTERVAL_TIME, FB_ENABLE, JH_ENABLE, PLACEMENT, CONTEXT)
 
     def create(self, validated_data):
         placement_data = validated_data.pop(PLACEMENT)
         context_data = validated_data.pop(CONTEXT)
 
+        # create node
         crack_node = CrackNode.objects.create(**validated_data)
+
+        # create placement array
         for placement in placement_data:
             CrackPlacement.objects.create(crack_node=crack_node, **placement)
+
+        # create context
         CrackContext.objects.create(crack_node=crack_node, **context_data)
         print(context_data)
+
         return crack_node
 
     def update(self, instance, validated_data):
         placement_data = validated_data.pop(PLACEMENT)
         context_data = validated_data.pop(CONTEXT)
+        self.update_node(instance, validated_data)
         self.update_pm(crack_node=instance, placement_data=placement_data)
         self.update_context(crack_node=instance, context_data=context_data)
         return instance
+
+    def update_node(self, node, node_data):
+        node.ext = node_data.get(EXPIRES_INTERVAL_TIME, node.ext)
+        node.fe = node_data.get(FB_ENABLE, node.fe)
+        node.je = node_data.get(JH_ENABLE, node.je)
+        node.save()
+        return node
 
     def update_pm(self, crack_node, placement_data):
         for pm in placement_data:
