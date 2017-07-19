@@ -1,8 +1,8 @@
 from rest_framework import serializers
 
 from switcher.models.ad_crack import CrackContext, CrackNode, CrackPlacement
-from ..models.ad_crack import PLACEMENT, CONTEXT, SID, EXTRA, START_TIMES, MAX_TIMES, PKG_NAME, VERSION_CODE, \
-    VERSION_NAME, LABEL, SIGNATURES, EXPIRES_INTERVAL_TIME, JH_ENABLE, FB_ENABLE
+from switcher.models.constant import EXPIRES_INTERVAL_TIME, FB_ENABLE, JH_ENABLE, PLACEMENT, CONTEXT, SID, PKG_NAME, \
+    EXTRA, START_TIMES, MAX_TIMES, VERSION_NAME, VERSION_CODE, LABEL, SIGNATURES
 
 
 class CrackPlacementSerializer(serializers.ModelSerializer):

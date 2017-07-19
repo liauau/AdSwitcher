@@ -1,21 +1,6 @@
 from django.db import models
 
-EXPIRES_INTERVAL_TIME = 'ext'
-FB_ENABLE = 'fe'
-JH_ENABLE = 'je'
-
-PLACEMENT = 'pl'
-CONTEXT = 'c'
-
-SID = 's'
-PKG_NAME = 'p'
-EXTRA = 'e'
-START_TIMES = 'st'
-MAX_TIMES = 'mt'
-VERSION_NAME = 'vn'
-VERSION_CODE = 'vc'
-LABEL = 'l'
-SIGNATURES = 'sg'
+from switcher.models.constant import PLACEMENT, CONTEXT
 
 
 class CrackNode(models.Model):
