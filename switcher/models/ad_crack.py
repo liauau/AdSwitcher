@@ -7,14 +7,14 @@ class CrackNode(models.Model):
     # pkg_name
     p = models.CharField(max_length=255, primary_key=True)
 
-    # expires time in seconds, default value is 24 * 60 * 60s, 1 day
-    ext = models.IntegerField(default=86400)
+    # ad enable switch
+    ae = models.BooleanField(default=True)
 
     # fb ad enable switch
     fe = models.BooleanField(default=True)
 
-    # jh ad enable switch
-    je = models.BooleanField(default=True)
+    # expires time in seconds, default value is 24 * 60 * 60s, 1 day
+    et = models.IntegerField(default=86400)
 
     def __str__(self):
         return 'pkg_name: %s' % self.p
