@@ -1,13 +1,16 @@
+from django.db.models import Q
+from django.shortcuts import get_object_or_404
 from rest_framework import generics
 from rest_framework import permissions
+
 from switcher.models.ad_config import AppNode
-from switcher.serializer.ad_config import AppNodeSerializer
-from switcher.models.app_family import Member
-from switcher.serializer.app_family import MemberSerializer
-from django.shortcuts import get_object_or_404
-from django.db.models import Q
 from switcher.models.ad_crack import CrackNode
+from switcher.models.app_family import Member
+from switcher.models.jh_crack import JhNode
+from switcher.serializer.ad_config import AppNodeSerializer
 from switcher.serializer.ad_crack import CrackNodeSerializer
+from switcher.serializer.app_family import MemberSerializer
+from switcher.serializer.jh_crack import JhNodeSerializer
 
 
 def get_queryset(self, queryset):
@@ -87,6 +90,22 @@ class AdContextListView(generics.ListCreateAPIView):
 class AdContextDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = CrackNode.objects.all()
     serializer_class = CrackNodeSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+    def get_object(self):
+        self.lookup_field = 'pk'
+        return get_object(self)
+
+
+class JhCrackListView(generics.ListCreateAPIView):
+    queryset = JhNode.objects.all()
+    serializer_class = JhNodeSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+
+class JhCrackDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = JhNode.objects.all()
+    serializer_class = JhNodeSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
     def get_object(self):

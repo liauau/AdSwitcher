@@ -17,7 +17,7 @@ class CrackNode(models.Model):
     je = models.BooleanField(default=True)
 
     def __str__(self):
-        return 'pkg_name: %s' % self.pkg_name
+        return 'pkg_name: %s' % self.p
 
 
 class CrackPlacement(models.Model):
@@ -36,7 +36,7 @@ class CrackPlacement(models.Model):
     crack_node = models.ForeignKey('CrackNode', related_name=PLACEMENT, on_delete=models.CASCADE)
 
     def __str__(self):
-        return 'sid: %s' % self.sid + ', extra: %s' % self.extra
+        return 'sid: %s' % self.s + ', extra: %s' % self.e
 
 
 class CrackContext(models.Model):
@@ -58,4 +58,4 @@ class CrackContext(models.Model):
     crack_node = models.OneToOneField('CrackNode', related_name=CONTEXT, on_delete=models.CASCADE)
 
     def __str__(self):
-        return 'pkg_name: %s' % self.pkg_name
+        return 'pkg_name: %s' % self.p

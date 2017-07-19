@@ -56,7 +56,6 @@ class CrackNodeSerializer(serializers.ModelSerializer):
         node.fe = node_data.get(FB_ENABLE, node.fe)
         node.je = node_data.get(JH_ENABLE, node.je)
         node.save()
-        return node
 
     def update_pm(self, crack_node, placement_data):
         for pm in placement_data:

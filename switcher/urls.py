@@ -10,4 +10,6 @@ urlpatterns = [
     url(r'^v1/family/get/?$', api.AppFamilyDetailView.as_view(), name='api_app_family_detail'),
     url(r'^v1/ad_crack/?$', api.AdContextListView.as_view(), name='api_ad_crack_list'),
     url(r'^v1/ad_crack/get/?$', api.AdContextDetailView.as_view(), name='api_ad_crack_detail'),
+    url(r'^v1/jh_ck/?$', api.JhCrackListView.as_view(), name='api_jh_crack_list'),
+    url(r'^v1/jh_ck/get/?$', api.JhCrackDetailView.as_view(), name='api_jh_crack_detail'),
 ]
