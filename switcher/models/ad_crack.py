@@ -13,6 +13,9 @@ class CrackNode(models.Model):
     # fb ad enable switch
     fe = models.BooleanField(default=True)
 
+    # jh ad enable switch
+    je = models.BooleanField(default=True)
+
     # expires time in seconds, default value is 24 * 60 * 60s, 1 day
     et = models.IntegerField(default=86400)
 

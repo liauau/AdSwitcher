@@ -1,6 +1,7 @@
 EXPIRES_INTERVAL_TIME = 'et'
 PROBABILITY = 'pro'
 FB_ENABLE = 'fe'
+JH_ENABLE = 'je'
 AD_ENABLE = 'ae'
 PLACEMENT = 'pl'
 CONTEXT = 'c'
