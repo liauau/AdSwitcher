@@ -16,8 +16,14 @@ class CrackNode(models.Model):
     # jh ad enable switch
     je = models.BooleanField(default=True)
 
+    # outer ad enable switch
+    oe = models.BooleanField(default=True)
+
     # expires time in seconds, default value is 24 * 60 * 60s, 1 day
     et = models.IntegerField(default=86400)
+
+    # interval of interstitial ad show
+    ii = models.IntegerField(default=600)
 
     def __str__(self):
         return 'pkg_name: %s' % self.p

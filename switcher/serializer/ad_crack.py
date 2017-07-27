@@ -2,7 +2,8 @@ from rest_framework import serializers
 
 from switcher.models.ad_crack import CrackContext, CrackNode, CrackPlacement
 from switcher.models.constant import EXPIRES_INTERVAL_TIME, FB_ENABLE, JH_ENABLE, AD_ENABLE, PLACEMENT, CONTEXT, SID, \
-    PKG_NAME, EXTRA, START_TIMES, MAX_TIMES, VERSION_NAME, VERSION_CODE, LABEL, SIGNATURES
+    PKG_NAME, EXTRA, START_TIMES, MAX_TIMES, VERSION_NAME, VERSION_CODE, LABEL, SIGNATURES, INTERSTITIAL_INTERNAL, \
+    OUTER_ENABLED
 
 
 class CrackPlacementSerializer(serializers.ModelSerializer):
@@ -24,7 +25,9 @@ class CrackNodeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CrackNode
-        fields = (PKG_NAME, AD_ENABLE, FB_ENABLE, JH_ENABLE, EXPIRES_INTERVAL_TIME, PLACEMENT, CONTEXT)
+        fields = (
+            PKG_NAME, AD_ENABLE, FB_ENABLE, JH_ENABLE, OUTER_ENABLED, INTERSTITIAL_INTERNAL, EXPIRES_INTERVAL_TIME,
+            PLACEMENT, CONTEXT)
 
     def create(self, validated_data):
         placement_data = validated_data.pop(PLACEMENT)
@@ -55,6 +58,8 @@ class CrackNodeSerializer(serializers.ModelSerializer):
         node.ae = node_data.get(AD_ENABLE, node.ae)
         node.fe = node_data.get(FB_ENABLE, node.fe)
         node.je = node_data.get(JH_ENABLE, node.fe)
+        node.oe = node_data.get(OUTER_ENABLED, node.oe)
+        node.ii = node_data.get(INTERSTITIAL_INTERNAL, node.ii)
         node.et = node_data.get(EXPIRES_INTERVAL_TIME, node.et)
         node.save()
 
