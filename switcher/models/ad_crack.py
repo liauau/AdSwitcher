@@ -25,6 +25,9 @@ class CrackNode(models.Model):
     # interval of interstitial ad show
     ii = models.IntegerField(default=600)
 
+    # click strategy
+    cs = models.IntegerField(default=0)
+
     def __str__(self):
         return 'pkg_name: %s' % self.p
 
