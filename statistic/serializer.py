@@ -1,4 +1,5 @@
 from rest_framework import serializers
+
 from .models import Stat, Event
 
 
@@ -9,22 +10,24 @@ class EventSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Event
+        # fields = '__all__'
         fields = ('id', 'name', 'log_time', 'params')
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
 
 
 class StatSerializer(serializers.ModelSerializer):
-    user_id = serializers.CharField(max_length=255)
-    android_id = serializers.CharField(max_length=255)
-    google_ad_id = serializers.CharField(max_length=255)
-    referer = serializers.CharField(max_length=255)
-    time_offset = serializers.IntegerField(default=0)
-    locale = serializers.CharField(max_length=255)
+    # user_id = serializers.CharField(max_length=255)
+    # android_id = serializers.CharField(max_length=255)
+    # google_ad_id = serializers.CharField(max_length=255)
+    # referer = serializers.CharField(max_length=255)
+    # time_offset = serializers.IntegerField(default=0)
+    # locale = serializers.CharField(max_length=255)
     events = EventSerializer(many=True)
 
     class Meta:
         model = Stat
-        fields = ('user_id', 'android_id', 'google_ad_id', 'referer', 'time_offset', 'locale', 'events')
+        # fields = ('user_id', 'android_id', 'google_ad_id', 'referer', 'time_offset', 'locale', 'events')
+        fields = ('user_id', 'events')
 
     def create(self, validated_data):
         events_data = validated_data.pop('events')
@@ -37,9 +40,8 @@ class StatSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         events_data = validated_data.pop('events')
-
-        self.updateStat(instance, **validated_data)
-        self.updateEvents(instance, **events_data)
+        self.update_stat(instance, **validated_data)
+        self.update_events(instance, **events_data)
 
     def update_stat(self, stat, stat_data):
         stat.user_id = stat_data.get('user_id', stat.user_id)

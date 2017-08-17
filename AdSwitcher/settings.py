@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '65_fq9tz6bz)7i4=+x1o0#=(f+1y_#uce+lmbly_68kvz#xgr8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['45.32.83.198', '127.0.0.1', '192.168.1.141', 'api.miusay.com', 'api-debug.miusay.com']
 
