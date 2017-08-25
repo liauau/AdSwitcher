@@ -5,10 +5,12 @@ from rest_framework import permissions
 
 from switcher.models.ad_config import AppNode
 from switcher.models.ad_crack import CrackNode
+from switcher.models.ad_sdk import SdkNode
 from switcher.models.app_family import Member
 from switcher.models.jh_crack import JhNode
 from switcher.serializer.ad_config import AppNodeSerializer
 from switcher.serializer.ad_crack import CrackNodeSerializer
+from switcher.serializer.ad_sdk import SdkSerializer
 from switcher.serializer.app_family import MemberSerializer
 from switcher.serializer.jh_crack import JhNodeSerializer
 
@@ -111,3 +113,17 @@ class JhCrackDetailView(generics.RetrieveUpdateDestroyAPIView):
     def get_object(self):
         self.lookup_field = 'pk'
         return get_object(self)
+
+
+class SdkView(generics.CreateAPIView,
+              generics.RetrieveUpdateDestroyAPIView):
+    queryset = SdkNode.objects.all()
+    serializer_class = SdkSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+    def get_object(self):
+        node_id = 1
+        for n in self.get_queryset():
+            node_id = n.id
+        filter_kwargs = {'pk': node_id}
+        return generics.get_object_or_404(self.queryset, **filter_kwargs)
