@@ -16,18 +16,12 @@ class EventSerializer(serializers.ModelSerializer):
 
 
 class StatSerializer(serializers.ModelSerializer):
-    # user_id = serializers.CharField(max_length=255)
-    # android_id = serializers.CharField(max_length=255)
-    # google_ad_id = serializers.CharField(max_length=255)
-    # referer = serializers.CharField(max_length=255)
-    # time_offset = serializers.IntegerField(default=0)
-    # locale = serializers.CharField(max_length=255)
     events = EventSerializer(many=True)
 
     class Meta:
         model = Stat
-        # fields = ('user_id', 'android_id', 'google_ad_id', 'referer', 'time_offset', 'locale', 'events')
-        fields = ('user_id', 'events')
+        # fields = '__all__'
+        fields = ('user_id', 'android_id', 'google_ad_id', 'referer', 'time_offset', 'locale', 'events')
 
     def create(self, validated_data):
         events_data = validated_data.pop('events')

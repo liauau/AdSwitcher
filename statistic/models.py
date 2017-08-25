@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
-from django.db import models
 from django.contrib.postgres.fields import JSONField
+from django.db import models
 
 
 class Stat(models.Model):
@@ -13,7 +13,7 @@ class Stat(models.Model):
     locale = models.CharField(max_length=255)
 
     def __str__(self):
-        return 'user_id: %s' % self.user_id
+        return 'user_id: %s' % self.user_id + ', google_id: %s' % self.google_ad_id
 
 
 class Event(models.Model):
@@ -25,3 +25,8 @@ class Event(models.Model):
     def __str__(self):
         return 'name: %s' % self.name + ', log_time: %s' + self.log_time.value_to_string()
 
+
+class EventInfo(object):
+    name = ""
+    count = 0
+    user_count = 0

@@ -1,0 +1,45 @@
+{% extends 'statistics/base.html' %}
+{% block content %}
+
+<div>
+    <p>user    : {{ user_count }} </p>
+    <p>user_id :
+    {% for id in user_ids %}
+    {{id}}
+    {% endfor %}
+    </p>
+
+    <table class="table table-hover ">
+        <thead class="thread-inverse">
+        <tr>
+            <th>#</th>
+            <th>User</th>
+            <th>UserId</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for id in user_ids %}
+        <tr>
+            <th scope="row">{{id}}</th>
+            <td>{{id}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>
+</div>
+
+{% endblock %}
+
+
+<!--<ul class="list-group">-->
+<!--{% for node in node_set %}-->
+<!--<li class="list-group-item justify-content-between">-->
+<!--<a href="{% url 'switcher:detail' node.id %}">{{node.app_name}}</a>-->
+<!--&lt;!&ndash;<div align="right">&ndash;&gt;-->
+<!--&lt;!&ndash;<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--</li>-->
+<!--{% endfor %}-->
+<!--</ul>-->
