@@ -20,5 +20,6 @@ VALUE = 'vl'
 INTERSTITIAL_INTERNAL = 'ii'
 OUTER_ENABLED = 'oe'
 CLICK_STRATEGY = 'cs'
+COOL_DOWN = "cd"
 LINK = 'lk'
 UPDATE_TIME = 'ut'

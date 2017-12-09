@@ -28,6 +28,9 @@ class CrackNode(models.Model):
     # click strategy
     cs = models.IntegerField(default=0)
 
+    # the interval of interstitial ad clicked to be action after shown, the unit is millisecond
+    cd = models.IntegerField(default=0)
+
     def __str__(self):
         return 'pkg_name: %s' % self.p
 
