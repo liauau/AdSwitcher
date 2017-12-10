@@ -3,7 +3,7 @@ from rest_framework import serializers
 from switcher.models.ad_crack import CrackContext, CrackNode, CrackPlacement
 from switcher.models.constant import EXPIRES_INTERVAL_TIME, FB_ENABLE, JH_ENABLE, AD_ENABLE, PLACEMENT, CONTEXT, SID, \
     PKG_NAME, EXTRA, START_TIMES, MAX_TIMES, VERSION_NAME, VERSION_CODE, LABEL, SIGNATURES, INTERSTITIAL_INTERNAL, \
-    OUTER_ENABLED, CLICK_STRATEGY
+    OUTER_ENABLED, CLICK_STRATEGY, COOL_DOWN
 
 
 class CrackPlacementSerializer(serializers.ModelSerializer):
@@ -27,7 +27,7 @@ class CrackNodeSerializer(serializers.ModelSerializer):
         model = CrackNode
         fields = (
             PKG_NAME, AD_ENABLE, FB_ENABLE, JH_ENABLE, OUTER_ENABLED, CLICK_STRATEGY, INTERSTITIAL_INTERNAL,
-            EXPIRES_INTERVAL_TIME, PLACEMENT, CONTEXT)
+            EXPIRES_INTERVAL_TIME, COOL_DOWN, PLACEMENT, CONTEXT)
 
     def create(self, validated_data):
         placement_data = validated_data.pop(PLACEMENT)
@@ -62,6 +62,7 @@ class CrackNodeSerializer(serializers.ModelSerializer):
         node.cs = node_data.get(CLICK_STRATEGY, node.cs)
         node.ii = node_data.get(INTERSTITIAL_INTERNAL, node.ii)
         node.et = node_data.get(EXPIRES_INTERVAL_TIME, node.et)
+        node.cd = node_data.get(COOL_DOWN, node.cd)
         node.save()
 
     def update_pm(self, crack_node, placement_data):
