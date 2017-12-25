@@ -17,7 +17,7 @@ from switcher.serializer.jh_crack import JhNodeSerializer
 
 
 def get_ip(request):
-    if 'HTTP_X_FORWARDED_FOR'in request.META.keys():
+    if 'HTTP_X_FORWARDED_FOR' in request.META.keys():
         ip = request.META['HTTP_X_FORWARDED_FOR']
     else:
         ip = request.META['REMOTE_ADDR']
