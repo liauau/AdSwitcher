@@ -1,4 +1,5 @@
 from django.db.models import Q
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
 from rest_framework import permissions
@@ -13,6 +14,14 @@ from switcher.serializer.ad_crack import CrackNodeSerializer
 from switcher.serializer.ad_sdk import SdkSerializer
 from switcher.serializer.app_family import MemberSerializer
 from switcher.serializer.jh_crack import JhNodeSerializer
+
+
+def get_ip(request):
+    if 'HTTP_X_FORWARDED_FOR'in request.META.keys():
+        ip = request.META['HTTP_X_FORWARDED_FOR']
+    else:
+        ip = request.META['REMOTE_ADDR']
+    return HttpResponse('%s' % ip)
 
 
 def get_queryset(self, queryset):
