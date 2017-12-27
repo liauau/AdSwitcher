@@ -31,6 +31,11 @@ class CrackNode(models.Model):
     # the interval of interstitial ad clicked to be action after shown, the unit is millisecond
     cd = models.IntegerField(default=1000)
 
+    # what ad platform using.
+    # 0 = Facebook
+    # 1 = AppNext
+    gp = models.IntegerField(default=0)
+
     def __str__(self):
         return 'pkg_name: %s' % self.p
 

@@ -23,3 +23,4 @@ CLICK_STRATEGY = 'cs'
 COOL_DOWN = "cd"
 LINK = 'lk'
 UPDATE_TIME = 'ut'
+GRAY_PLATFORM = 'gp'
