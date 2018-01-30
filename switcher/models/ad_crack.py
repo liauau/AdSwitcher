@@ -16,7 +16,7 @@ class CrackNode(models.Model):
     # jh ad enable switch
     je = models.BooleanField(default=True)
 
-    # outer ad enable switch
+    # jh automatically outer ad enable switch
     oe = models.BooleanField(default=True)
 
     # expires time in seconds, default value is 24 * 60 * 60s, 1 day
@@ -30,6 +30,11 @@ class CrackNode(models.Model):
 
     # the interval of interstitial ad clicked to be action after shown, the unit is millisecond
     cd = models.IntegerField(default=1000)
+
+    # what ad platform using.
+    # 0 = Facebook
+    # 1 = AppNext
+    gp = models.IntegerField(default=0)
 
     def __str__(self):
         return 'pkg_name: %s' % self.p
